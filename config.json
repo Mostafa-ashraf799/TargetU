@@ -1,0 +1,32 @@
+{
+  "telegram": {
+    "token": "YOUR_TELEGRAM_BOT_TOKEN_HERE",
+    "chatId": "YOUR_CHAT_ID_HERE"
+  },
+  "admin": {
+    "username": "admin",
+    "password": "admin123"
+  },
+  "vipCodes": [
+    "VIP-ALPHA-001",
+    "VIP-BETA-002",
+    "VIP-GAMMA-003",
+    "VIP-DELTA-004",
+    "VIP-EPSILON-005",
+    "VIP-ZETA-006",
+    "VIP-ETA-007",
+    "VIP-THETA-008",
+    "VIP-IOTA-009",
+    "VIP-KAPPA-010",
+    "VIP-LAMBDA-011",
+    "VIP-MU-012",
+    "VIP-NU-013",
+    "VIP-XI-014",
+    "VIP-OMICRON-015",
+    "VIP-PI-016",
+    "VIP-RHO-017",
+    "VIP-SIGMA-018",
+    "VIP-TAU-019",
+    "VIP-UPSILON-020"
+  ]
+}

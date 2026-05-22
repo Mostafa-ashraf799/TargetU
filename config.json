@@ -1,7 +1,7 @@
 {
   "telegram": {
-    "token": "YOUR_TELEGRAM_BOT_TOKEN_HERE",
-    "chatId": "YOUR_CHAT_ID_HERE"
+    "token": "8990034804:AAGLs7rCbqHE7ReI2dhi1roafNn_a1RNEVA",
+    "chatId": "-1003583303867"
   },
   "admin": {
     "username": "admin",

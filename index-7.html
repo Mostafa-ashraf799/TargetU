@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Target U — فرص بلا حدود</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #13161e;
+  --bg3: #1a1e28;
+  --bg4: #222636;
+  --gold: #c9a84c;
+  --gold2: #e8c97a;
+  --gold-glow: rgba(201,168,76,0.18);
+  --amber: #f0a500;
+  --text: #e8e4d8;
+  --text2: #a89e88;
+  --text3: #6b6355;
+  --accent: #4a7fa5;
+  --accent2: #6ba3c9;
+  --vip: #8b5cf6;
+  --vip2: #a78bfa;
+  --admin: #e05555;
+  --success: #4ade80;
+  --border: rgba(201,168,76,0.15);
+  --border2: rgba(255,255,255,0.06);
+  --shadow: 0 8px 32px rgba(0,0,0,0.5);
+  --radius: 14px;
+  --font-ar: 'Cairo', sans-serif;
+}
+body.light {
+  --bg: #f5f0e8;
+  --bg2: #ede8dd;
+  --bg3: #e4ddd0;
+  --bg4: #d8d0c0;
+  --text: #1a1612;
+  --text2: #4a4030;
+  --text3: #8a7a60;
+  --border: rgba(150,100,30,0.2);
+  --border2: rgba(0,0,0,0.08);
+  --shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-ar);min-height:100vh;transition:background .3s,color .3s;}
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:99px;}
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;}
+.page.active{display:flex;flex-direction:column;}
+/* ══════════════════════════════
+   SPLASH / INTRO PAGE
+══════════════════════════════ */
+#page-splash{align-items:center;justify-content:center;position:fixed;inset:0;z-index:9999;background:var(--bg);flex-direction:column;gap:28px;}
+.splash-logo{font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-2px;animation:fadeInUp .8s ease both;}
+.splash-tagline{font-size:1.15rem;color:var(--text2);letter-spacing:2px;animation:fadeInUp .8s .2s ease both;}
+.splash-desc{max-width:460px;text-align:center;line-height:1.9;color:var(--text2);animation:fadeInUp .8s .4s ease both;font-size:.95rem;}
+.splash-btn{margin-top:12px;padding:14px 44px;background:linear-gradient(135deg,var(--gold),var(--amber));border:none;border-radius:99px;color:#0d0f14;font-family:var(--font-ar);font-weight:700;font-size:1.05rem;cursor:pointer;animation:fadeInUp .8s .6s ease both;transition:transform .2s,box-shadow .2s;}
+.splash-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,0.4);}
+.splash-stars{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.star{position:absolute;width:2px;height:2px;background:var(--gold2);border-radius:50%;animation:twinkle var(--d,3s) var(--delay,0s) infinite;}
+@keyframes twinkle{0%,100%{opacity:0;}50%{opacity:.8;}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+/* ══════════════════════════════
+   AUTH PAGES
+══════════════════════════════ */
+#page-auth{align-items:center;justify-content:center;padding:40px 20px;}
+.auth-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:44px;width:100%;max-width:480px;box-shadow:var(--shadow);animation:fadeInUp .5s ease;}
+.auth-logo{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:6px;}
+.auth-sub{text-align:center;color:var(--text2);font-size:.88rem;margin-bottom:28px;}
+.tab-row{display:flex;gap:8px;margin-bottom:28px;background:var(--bg3);border-radius:12px;padding:5px;}
+.tab-btn{flex:1;padding:10px;border:none;border-radius:9px;background:transparent;color:var(--text2);font-family:var(--font-ar);font-size:.92rem;cursor:pointer;transition:all .2s;}
+.tab-btn.active{background:linear-gradient(135deg,var(--gold),var(--amber));color:#0d0f14;font-weight:700;}
+.field-group{display:flex;flex-direction:column;gap:14px;}
+.field-label{font-size:.82rem;color:var(--text2);margin-bottom:4px;}
+.field-wrap{display:flex;flex-direction:column;gap:4px;}
+input[type=text],input[type=tel],input[type=number],input[type=password],textarea,select{width:100%;padding:12px 16px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:var(--font-ar);font-size:.95rem;outline:none;transition:border .2s;}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);}
+select option{background:var(--bg3);}
+.gender-row{display:flex;gap:10px;}
+.gender-btn{flex:1;padding:11px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;color:var(--text2);font-family:var(--font-ar);cursor:pointer;transition:all .2s;font-size:.9rem;}
+.gender-btn.active{border-color:var(--gold);background:var(--gold-glow);color:var(--gold2);}
+.avatar-upload{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.avatar-circle{width:88px;height:88px;border-radius:50%;border:2px dashed var(--gold);background:var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:border-color .2s;}
+.avatar-circle img{width:100%;height:100%;object-fit:cover;}
+.avatar-circle:hover{border-color:var(--gold2);}
+.auth-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--amber));border:none;border-radius:12px;color:#0d0f14;font-family:var(--font-ar);font-weight:700;font-size:1rem;cursor:pointer;margin-top:6px;transition:transform .2s,box-shadow .2s;}
+.auth-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,0.35);}
+.vip-notice{background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:10px;padding:12px 16px;font-size:.85rem;color:var(--vip2);margin-bottom:8px;}
+/* ══════════════════════════════
+   MAIN LAYOUT
+══════════════════════════════ */
+#page-main{flex-direction:row;}
+.sidebar{width:72px;background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:20px 0;gap:6px;position:fixed;right:0;top:0;bottom:0;z-index:100;transition:width .3s;}
+.sidebar:hover{width:200px;}
+.nav-item{display:flex;align-items:center;gap:12px;width:100%;padding:13px 20px;border:none;background:transparent;color:var(--text2);cursor:pointer;transition:all .2s;border-radius:0;font-family:var(--font-ar);font-size:.9rem;white-space:nowrap;overflow:hidden;}
+.nav-item:hover,.nav-item.active{color:var(--gold);background:var(--gold-glow);}
+.nav-item .icon{font-size:1.25rem;min-width:22px;text-align:center;}
+.nav-label{opacity:0;transition:opacity .2s;}
+.sidebar:hover .nav-label{opacity:1;}
+.main-content{margin-right:72px;flex:1;min-height:100vh;}
+/* ══════════════════════════════
+   OPPORTUNITIES PAGE
+══════════════════════════════ */
+#page-opps{padding:0;}
+.opps-header{padding:32px 36px 20px;border-bottom:1px solid var(--border);}
+.opps-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--gold2);}
+.opps-subtitle{color:var(--text2);font-size:.88rem;margin-top:4px;}
+.opps-compose{margin:20px 36px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:20px;}
+.compose-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:var(--font-ar);font-size:.95rem;resize:none;outline:none;min-height:70px;}
+.compose-actions{display:flex;justify-content:space-between;align-items:center;margin-top:12px;}
+.compose-type{display:flex;gap:8px;}
+.type-btn{padding:7px 16px;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:var(--font-ar);font-size:.82rem;cursor:pointer;transition:all .2s;}
+.type-btn.active{background:var(--gold);color:#0d0f14;border-color:var(--gold);font-weight:600;}
+.send-btn{padding:9px 24px;background:linear-gradient(135deg,var(--gold),var(--amber));border:none;border-radius:99px;color:#0d0f14;font-family:var(--font-ar);font-weight:700;cursor:pointer;font-size:.9rem;}
+.opps-feed{padding:0 36px 36px;display:flex;flex-direction:column;gap:16px;margin-top:16px;}
+.opp-card{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;}
+.opp-card:hover{border-color:var(--border);transform:translateY(-1px);}
+.opp-tag{display:inline-block;padding:4px 12px;border-radius:99px;font-size:.75rem;font-weight:600;margin-bottom:10px;}
+.tag-job{background:rgba(74,127,165,0.2);color:var(--accent2);}
+.tag-grant{background:rgba(74,222,128,0.15);color:var(--success);}
+.opp-title{font-size:1.05rem;font-weight:600;margin-bottom:6px;}
+.opp-body{color:var(--text2);font-size:.9rem;line-height:1.8;}
+.opp-footer{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border2);}
+.opp-avatar{width:34px;height:34px;border-radius:50%;background:var(--bg4);overflow:hidden;flex-shrink:0;}
+.opp-avatar img{width:100%;height:100%;object-fit:cover;}
+.opp-meta{flex:1;font-size:.8rem;color:var(--text3);}
+.opp-sender{color:var(--text2);font-weight:600;}
+/* ══════════════════════════════
+   CHAT PAGE
+══════════════════════════════ */
+#page-chat{flex-direction:row;}
+.chat-sidebar{width:280px;background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;height:100vh;position:sticky;top:0;}
+.chat-sidebar-header{padding:20px;border-bottom:1px solid var(--border);}
+.chat-search{width:100%;padding:9px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:var(--font-ar);font-size:.88rem;outline:none;}
+.chat-rooms-list{flex:1;overflow-y:auto;padding:10px;}
+.room-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;cursor:pointer;transition:background .2s;}
+.room-item:hover,.room-item.active{background:var(--gold-glow);}
+.room-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.room-global{background:linear-gradient(135deg,var(--gold),var(--amber));}
+.room-vip-icon{background:linear-gradient(135deg,var(--vip),#6d28d9);}
+.room-info{flex:1;min-width:0;}
+.room-name{font-size:.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.room-id{font-size:.72rem;color:var(--text3);font-family:monospace;}
+.create-room-btn{margin:12px;padding:11px;background:linear-gradient(135deg,var(--vip),#6d28d9);border:none;border-radius:10px;color:#fff;font-family:var(--font-ar);font-weight:600;cursor:pointer;font-size:.88rem;transition:opacity .2s;}
+.create-room-btn:hover{opacity:.9;}
+.chat-main{flex:1;display:flex;flex-direction:column;height:100vh;}
+.chat-topbar{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.chat-room-name{font-weight:700;font-size:1.05rem;}
+.chat-room-id{font-size:.78rem;color:var(--text3);font-family:monospace;}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;}
+.msg-wrap{display:flex;gap:10px;max-width:75%;}
+.msg-wrap.mine{align-self:flex-start;flex-direction:row-reverse;}
+.msg-wrap.other{align-self:flex-end;}
+.msg-avatar{width:36px;height:36px;border-radius:50%;background:var(--bg4);overflow:hidden;flex-shrink:0;cursor:pointer;}
+.msg-avatar img{width:100%;height:100%;object-fit:cover;}
+.msg-body{display:flex;flex-direction:column;gap:3px;}
+.msg-header{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--text3);}
+.msg-name{font-weight:600;color:var(--text2);}
+.msg-gender{font-size:.85rem;}
+.msg-bubble{padding:11px 15px;border-radius:16px;font-size:.92rem;line-height:1.7;position:relative;word-break:break-word;}
+.msg-wrap.mine .msg-bubble{background:linear-gradient(135deg,rgba(201,168,76,0.25),rgba(240,165,0,0.15));border:1px solid rgba(201,168,76,0.3);border-radius:16px 4px 16px 16px;}
+.msg-wrap.other .msg-bubble{background:var(--bg3);border:1px solid var(--border2);border-radius:4px 16px 16px 16px;}
+.msg-time{font-size:.72rem;color:var(--text3);margin-top:2px;}
+.msg-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.msg-action-btn{padding:4px 10px;border-radius:99px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:.72rem;cursor:pointer;font-family:var(--font-ar);}
+.msg-action-btn:hover{border-color:var(--gold);color:var(--gold);}
+.msg-reply-ref{background:rgba(201,168,76,0.08);border-right:2px solid var(--gold);padding:6px 10px;border-radius:6px;font-size:.8rem;color:var(--text2);margin-bottom:6px;}
+.reply-indicator{font-size:.75rem;color:var(--vip2);margin-top:3px;display:flex;align-items:center;gap:4px;}
+.poll-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px;min-width:220px;}
+.poll-question{font-weight:600;margin-bottom:10px;font-size:.92rem;}
+.poll-option{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg4);border-radius:8px;margin-bottom:6px;cursor:pointer;transition:background .2s;font-size:.88rem;}
+.poll-option:hover{background:var(--gold-glow);}
+.poll-bar{height:4px;background:var(--gold);border-radius:99px;margin-top:3px;transition:width .5s;}
+.chat-input-area{padding:16px 20px;border-top:1px solid var(--border);background:var(--bg2);}
+.reply-preview{background:var(--bg3);border-right:2px solid var(--gold);border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:.82rem;color:var(--text2);display:none;justify-content:space-between;align-items:center;}
+.reply-preview.show{display:flex;}
+.chat-input-row{display:flex;gap:10px;align-items:flex-end;}
+.chat-input{flex:1;padding:12px 16px;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-family:var(--font-ar);font-size:.92rem;outline:none;resize:none;max-height:120px;}
+.chat-input:focus{border-color:var(--gold);}
+.chat-attach-btn,.chat-send-btn{width:44px;height:44px;border-radius:12px;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:all .2s;}
+.chat-attach-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);}
+.chat-attach-btn:hover{border-color:var(--gold);color:var(--gold);}
+.chat-send-btn{background:linear-gradient(135deg,var(--gold),var(--amber));color:#0d0f14;}
+.chat-send-btn:hover{box-shadow:0 4px 16px rgba(201,168,76,0.4);}
+.voice-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:all .2s;}
+.voice-btn.recording{background:rgba(224,85,85,0.2);border-color:var(--admin);color:var(--admin);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(224,85,85,0.4);}50%{box-shadow:0 0 0 8px rgba(224,85,85,0);}}
+.audio-msg{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg3);border-radius:12px;}
+.audio-play-btn{width:34px;height:34px;border-radius:50%;background:var(--gold);border:none;color:#0d0f14;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.audio-wave{flex:1;height:28px;background:rgba(201,168,76,0.1);border-radius:4px;position:relative;overflow:hidden;}
+.img-msg{max-width:240px;border-radius:12px;overflow:hidden;}
+.img-msg img{width:100%;display:block;}
+.file-msg{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg3);border-radius:12px;cursor:pointer;}
+.file-icon{font-size:1.5rem;}
+.file-name{font-size:.85rem;font-weight:600;}
+.file-size{font-size:.72rem;color:var(--text3);}
+/* ══════════════════════════════
+   PROFILE PAGE
+══════════════════════════════ */
+#page-profile{padding:40px;}
+.profile-card{max-width:560px;margin:0 auto;background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:40px;position:relative;}
+.profile-settings-btn{position:absolute;top:20px;left:20px;width:40px;height:40px;border-radius:12px;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:all .2s;}
+.profile-settings-btn:hover{border-color:var(--gold);color:var(--gold);}
+.settings-dropdown{position:absolute;top:68px;left:20px;background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:10px;min-width:200px;display:none;z-index:50;box-shadow:var(--shadow);}
+.settings-dropdown.show{display:block;}
+.settings-item{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:9px;cursor:pointer;font-size:.88rem;color:var(--text2);transition:background .2s;}
+.settings-item:hover{background:var(--gold-glow);color:var(--gold);}
+.profile-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:28px;}
+.profile-avatar{width:110px;height:110px;border-radius:50%;border:3px solid var(--gold);overflow:hidden;cursor:pointer;position:relative;}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;}
+.avatar-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;border-radius:50%;}
+.profile-avatar:hover .avatar-overlay{opacity:1;}
+.profile-name{font-size:1.4rem;font-weight:700;}
+.profile-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:99px;font-size:.78rem;font-weight:600;margin-top:6px;}
+.badge-vip{background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.4);color:var(--vip2);}
+.badge-admin{background:rgba(224,85,85,0.15);border:1px solid rgba(224,85,85,0.3);color:var(--admin);}
+.profile-desc{color:var(--text2);text-align:center;line-height:1.8;font-size:.92rem;}
+.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0;}
+.stat-box{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:16px;text-align:center;}
+.stat-num{font-size:1.5rem;font-weight:700;color:var(--gold2);}
+.stat-label{font-size:.75rem;color:var(--text3);margin-top:3px;}
+.profile-fields{display:flex;flex-direction:column;gap:14px;}
+.profile-field-row{display:flex;flex-direction:column;gap:6px;}
+.profile-save-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold),var(--amber));border:none;border-radius:12px;color:#0d0f14;font-family:var(--font-ar);font-weight:700;cursor:pointer;margin-top:6px;transition:transform .2s;}
+.profile-save-btn:hover{transform:translateY(-1px);}
+/* ══════════════════════════════
+   ADMIN PAGE
+══════════════════════════════ */
+#page-admin{padding:30px;}
+.admin-header{display:flex;align-items:center;gap:16px;margin-bottom:30px;}
+.admin-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--admin);}
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.admin-card{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:24px;}
+.admin-card-title{font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--text);}
+.user-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border2);margin-bottom:8px;}
+.user-row-avatar{width:38px;height:38px;border-radius:50%;background:var(--bg4);overflow:hidden;}
+.user-row-avatar img{width:100%;height:100%;object-fit:cover;}
+.user-row-info{flex:1;}
+.user-row-name{font-size:.9rem;font-weight:600;}
+.user-row-phone{font-size:.78rem;color:var(--text3);}
+.user-actions{display:flex;gap:6px;}
+.ua-btn{padding:6px 12px;border-radius:99px;border:1px solid;font-size:.75rem;cursor:pointer;font-family:var(--font-ar);background:transparent;}
+.ua-ban{border-color:var(--admin);color:var(--admin);}
+.ua-del{border-color:rgba(224,85,85,0.5);color:var(--admin);}
+.ua-unban{border-color:var(--success);color:var(--success);}
+.code-list{display:flex;flex-direction:column;gap:6px;}
+.code-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg3);border-radius:8px;font-family:monospace;font-size:.85rem;}
+.code-used{opacity:.45;text-decoration:line-through;}
+.code-status{font-size:.72rem;padding:2px 8px;border-radius:99px;}
+.code-avail{background:rgba(74,222,128,0.15);color:var(--success);}
+.code-taken{background:rgba(224,85,85,0.1);color:var(--admin);}
+.admin-stat-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border2);}
+.admin-stat-row:last-child{border:none;}
+.admin-stat-val{font-size:1.2rem;font-weight:700;color:var(--gold2);}
+/* ══════════════════════════════
+   MODAL
+══════════════════════════════ */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-bg.show{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:30px;width:100%;max-width:440px;max-height:85vh;overflow-y:auto;animation:fadeInUp .3s ease;}
+.modal-title{font-size:1.1rem;font-weight:700;margin-bottom:20px;}
+.modal-close{float:left;background:none;border:none;color:var(--text2);font-size:1.2rem;cursor:pointer;}
+/* ══════════════════════════════
+   PROFILE VIEW MODAL
+══════════════════════════════ */
+.pview-avatar{width:90px;height:90px;border-radius:50%;border:2px solid var(--gold);overflow:hidden;margin:0 auto 14px;}
+.pview-avatar img{width:100%;height:100%;object-fit:cover;}
+.pview-name{text-align:center;font-size:1.2rem;font-weight:700;}
+.pview-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+.pview-field{background:var(--bg3);border-radius:10px;padding:10px 14px;}
+.pview-field-label{font-size:.72rem;color:var(--text3);}
+.pview-field-val{font-size:.9rem;font-weight:600;margin-top:2px;}
+/* ══════════════════════════════
+   TOAST
+══════════════════════════════ */
+.toast-container{position:fixed;bottom:24px;left:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+.toast{padding:12px 20px;border-radius:12px;font-size:.88rem;font-weight:600;animation:slideIn .3s ease;box-shadow:var(--shadow);}
+.toast.success{background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:var(--success);}
+.toast.error{background:rgba(224,85,85,0.12);border:1px solid rgba(224,85,85,0.3);color:var(--admin);}
+.toast.info{background:var(--gold-glow);border:1px solid var(--border);color:var(--gold2);}
+@keyframes slideIn{from{opacity:0;transform:translateX(-20px);}to{opacity:1;transform:translateX(0);}}
+/* ══════════════════════════════
+   UTILITY
+══════════════════════════════ */
+.hidden{display:none!important;}
+.view{display:none;}
+.gold-text{color:var(--gold2);}
+.vip-text{color:var(--vip2);}
+.admin-text{color:var(--admin);}
+.flex-center{display:flex;align-items:center;justify-content:center;}
+.gap-8{gap:8px;}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3);}
+.empty-icon{font-size:3rem;margin-bottom:12px;}
+</style>
+</head>
+<body>
+
+<!-- ██████ SPLASH ██████ -->
+<div id="page-splash" class="page active">
+  <div class="splash-stars" id="starsContainer"></div>
+  <div class="splash-logo">Target U</div>
+  <div class="splash-tagline">✦ فرصتك تبدأ هنا ✦</div>
+  <div class="splash-desc">
+    منصة متكاملة للمنح الدراسية وفرص العمل — تواصل، اكتشف، وحقق أهدافك مع مجتمع من الطامحين
+  </div>
+  <button class="splash-btn" onclick="enterSite()">ابدأ رحلتك ←</button>
+</div>
+
+<!-- ██████ AUTH ██████ -->
+<div id="page-auth" class="page">
+  <div class="auth-card">
+    <div class="auth-logo">Target U</div>
+    <div class="auth-sub">المنصة الأولى للفرص العربية</div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchAuthTab('login')">تسجيل الدخول</button>
+      <button class="tab-btn" onclick="switchAuthTab('register')">إنشاء حساب</button>
+      <button class="tab-btn" onclick="switchAuthTab('vip')">حساب مميز ⭐</button>
+    </div>
+    <!-- LOGIN -->
+    <div id="auth-login">
+      <div class="field-group">
+        <div class="field-wrap">
+          <div class="field-label">رقم الهاتف</div>
+          <input type="tel" id="login-phone" placeholder="+20 100 000 0000">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">كلمة السر</div>
+          <input type="password" id="login-pass" placeholder="••••••••">
+        </div>
+        <button class="auth-btn" onclick="doLogin()">دخول</button>
+      </div>
+    </div>
+    <!-- REGISTER -->
+    <div id="auth-register" class="hidden">
+      <div class="field-group">
+        <div class="avatar-upload">
+          <div class="avatar-circle" onclick="document.getElementById('reg-avatar-input').click()">
+            <img id="reg-avatar-preview" src="" alt="" style="display:none">
+            <span id="reg-avatar-placeholder" style="font-size:2rem">📷</span>
+          </div>
+          <input type="file" id="reg-avatar-input" accept="image/*" style="display:none" onchange="previewAvatar(this,'reg-avatar-preview','reg-avatar-placeholder')">
+          <div class="field-label">صورة الملف الشخصي</div>
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">الاسم الكامل</div>
+          <input type="text" id="reg-name" placeholder="اسمك هنا">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">العمر</div>
+          <input type="number" id="reg-age" min="10" max="100" placeholder="20">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">النوع</div>
+          <div class="gender-row">
+            <button class="gender-btn" id="g-male" onclick="selectGender('male')">♂ ذكر</button>
+            <button class="gender-btn" id="g-female" onclick="selectGender('female')">♀ أنثى</button>
+          </div>
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">رقم الهاتف</div>
+          <input type="tel" id="reg-phone" placeholder="+20 100 000 0000">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">كلمة السر</div>
+          <input type="password" id="reg-pass" placeholder="••••••••">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">نبذة عنك</div>
+          <textarea id="reg-desc" rows="3" placeholder="اكتب شيئاً عن نفسك..."></textarea>
+        </div>
+        <button class="auth-btn" onclick="doRegister()">إنشاء الحساب</button>
+      </div>
+    </div>
+    <!-- VIP REGISTER -->
+    <div id="auth-vip" class="hidden">
+      <div class="vip-notice">⭐ إنشاء حساب مميز يتطلب رمزاً خاصاً من المدير</div>
+      <div class="field-group">
+        <div class="avatar-upload">
+          <div class="avatar-circle" onclick="document.getElementById('vip-avatar-input').click()">
+            <img id="vip-avatar-preview" src="" alt="" style="display:none">
+            <span id="vip-avatar-placeholder" style="font-size:2rem">📷</span>
+          </div>
+          <input type="file" id="vip-avatar-input" accept="image/*" style="display:none" onchange="previewAvatar(this,'vip-avatar-preview','vip-avatar-placeholder')">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">الاسم الكامل</div>
+          <input type="text" id="vip-name" placeholder="اسمك">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">العمر</div>
+          <input type="number" id="vip-age" min="10" max="100" placeholder="20">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">النوع</div>
+          <div class="gender-row">
+            <button class="gender-btn" id="vg-male" onclick="selectGenderVip('male')">♂ ذكر</button>
+            <button class="gender-btn" id="vg-female" onclick="selectGenderVip('female')">♀ أنثى</button>
+          </div>
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">رقم الهاتف</div>
+          <input type="tel" id="vip-phone" placeholder="+20 100 000 0000">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">كلمة السر</div>
+          <input type="password" id="vip-pass" placeholder="••••••••">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">نبذة عنك</div>
+          <textarea id="vip-desc" rows="2" placeholder="نبذة..."></textarea>
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">🔑 الرمز الخاص</div>
+          <input type="text" id="vip-code" placeholder="VIP-XXXXX-000">
+        </div>
+        <button class="auth-btn" onclick="doVipRegister()">إنشاء الحساب المميز</button>
+        <div style="margin-top:8px;text-align:center;font-size:.8rem;color:var(--text3)">
+          لديك حساب مدير؟
+          <span style="color:var(--gold);cursor:pointer" onclick="switchAuthTab('admin')">دخول الأدمن</span>
+        </div>
+      </div>
+    </div>
+    <!-- ADMIN LOGIN (hidden tab) -->
+    <div id="auth-admin" class="hidden">
+      <div class="field-group">
+        <div class="field-wrap">
+          <div class="field-label">اسم المستخدم</div>
+          <input type="text" id="admin-user" placeholder="admin">
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">كلمة السر</div>
+          <input type="password" id="admin-pass" placeholder="••••••••">
+        </div>
+        <button class="auth-btn" style="background:linear-gradient(135deg,var(--admin),#c0392b)" onclick="doAdminLogin()">دخول لوحة التحكم</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████ MAIN (sidebar + content) ██████ -->
+<div id="page-main" class="page">
+  <div class="main-content">
+    <!-- OPPORTUNITIES -->
+    <div id="view-opps" class="view">
+      <div class="opps-header">
+        <div class="opps-title">📌 المنح وفرص العمل</div>
+        <div class="opps-subtitle">آخر الفرص المتاحة من الإدارة والمستخدمين المميزين</div>
+      </div>
+      <div id="opps-compose-area" class="opps-compose hidden">
+        <textarea class="compose-textarea" id="opp-text" placeholder="اكتب تفاصيل الفرصة أو المنحة..."></textarea>
+        <div class="compose-actions">
+          <div class="compose-type">
+            <button class="type-btn active" id="t-job" onclick="selectOppType('job')">💼 وظيفة</button>
+            <button class="type-btn" id="t-grant" onclick="selectOppType('grant')">🎓 منحة</button>
+          </div>
+          <button class="send-btn" onclick="postOpp()">نشر ↑</button>
+        </div>
+      </div>
+      <div class="opps-feed" id="opps-feed">
+        <div class="empty-state"><div class="empty-icon">📭</div>لا توجد منشورات بعد</div>
+      </div>
+    </div>
+    <!-- CHAT -->
+    <div id="view-chat" class="view hidden" style="flex-direction:row;height:100vh;">
+      <div class="chat-sidebar">
+        <div class="chat-sidebar-header">
+          <div style="font-weight:700;margin-bottom:12px;font-size:1rem">💬 الدردشة</div>
+          <input class="chat-search" placeholder="🔍 ابحث برقم الغرفة..." id="room-search" oninput="filterRooms(this.value)">
+        </div>
+        <div class="chat-rooms-list" id="rooms-list"></div>
+        <div id="create-room-wrap" class="hidden">
+          <button class="create-room-btn" onclick="openCreateRoom()">➕ إنشاء غرفة جديدة</button>
+        </div>
+      </div>
+      <div class="chat-main">
+        <div class="chat-topbar">
+          <div>
+            <div class="chat-room-name" id="chat-room-name">اختر غرفة</div>
+            <div class="chat-room-id" id="chat-room-id"></div>
+          </div>
+          <div style="flex:1"></div>
+          <div id="poll-btn-wrap" class="hidden">
+            <button class="type-btn" onclick="openPollModal()">📊 استطلاع رأي</button>
+          </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="empty-state"><div class="empty-icon">💬</div>اختر غرفة لتبدأ الدردشة</div>
+        </div>
+        <div class="chat-input-area" id="chat-input-area" style="display:none">
+          <div class="reply-preview" id="reply-preview">
+            <span id="reply-preview-text"></span>
+            <button onclick="cancelReply()" style="background:none;border:none;color:var(--text2);cursor:pointer;font-size:1rem">✕</button>
+          </div>
+          <div class="chat-input-row">
+            <button class="voice-btn" id="voice-btn" onclick="toggleVoiceRecord()" title="رسالة صوتية">🎤</button>
+            <button class="chat-attach-btn" onclick="document.getElementById('file-input').click()" title="إرفاق ملف">📎</button>
+            <input type="file" id="file-input" style="display:none" onchange="handleFileAttach(this)">
+            <textarea class="chat-input" id="chat-input" rows="1" placeholder="اكتب رسالة..." oninput="autoResize(this)" onkeydown="handleChatKey(event)"></textarea>
+            <button class="chat-send-btn" onclick="sendMessage()">↑</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- PROFILE -->
+    <div id="view-profile" class="view hidden">
+      <div id="page-profile" style="padding:40px;">
+        <div class="profile-card" style="max-width:560px;margin:0 auto;">
+          <button class="profile-settings-btn" onclick="toggleSettings()" title="الإعدادات">⚙️</button>
+          <div class="settings-dropdown" id="settings-dropdown">
+            <div class="settings-item" onclick="toggleTheme()"><span id="theme-icon">🌙</span> <span id="theme-label">الوضع الليلي</span></div>
+            <hr style="border-color:var(--border2);margin:6px 0">
+            <div class="settings-item" onclick="showPage('auth');switchAuthTab('vip')">⭐ إنشاء حساب مميز</div>
+            <div class="settings-item" onclick="doLogout()" style="color:var(--admin)">🚪 تسجيل الخروج</div>
+          </div>
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar" onclick="document.getElementById('profile-avatar-input').click()">
+              <img id="prof-avatar-img" src="" alt="">
+              <div class="avatar-overlay">✏️</div>
+            </div>
+            <input type="file" id="profile-avatar-input" accept="image/*" style="display:none" onchange="updateProfileAvatar(this)">
+            <div class="profile-name" id="prof-name-display">—</div>
+            <div id="prof-badge-wrap"></div>
+          </div>
+          <div id="prof-stats" class="profile-stats hidden">
+            <div class="stat-box">
+              <div class="stat-num" id="stat-posts">0</div>
+              <div class="stat-label">منشورات</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" id="stat-rooms">0</div>
+              <div class="stat-label">غرف أنشأتها</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" id="stat-members">0</div>
+              <div class="stat-label">مشتركون</div>
+            </div>
+          </div>
+          <div class="profile-fields">
+            <div class="profile-field-row">
+              <div class="field-label">الاسم</div>
+              <input type="text" id="prof-name-input" placeholder="اسمك">
+            </div>
+            <div class="profile-field-row">
+              <div class="field-label">الوصف</div>
+              <textarea id="prof-desc-input" rows="3" placeholder="نبذة عنك..."></textarea>
+            </div>
+            <button class="profile-save-btn" onclick="saveProfile()">حفظ التغييرات</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar">
+    <div style="padding:16px 0 20px;font-family:'Playfair Display';font-size:1.1rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">TU</div>
+    <button class="nav-item active" onclick="switchView('opps',this)">
+      <span class="icon">📌</span><span class="nav-label">الفرص</span>
+    </button>
+    <button class="nav-item" onclick="switchView('chat',this)">
+      <span class="icon">💬</span><span class="nav-label">الدردشة</span>
+    </button>
+    <button class="nav-item" onclick="switchView('profile',this)">
+      <span class="icon">👤</span><span class="nav-label">ملفي</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ██████ ADMIN PAGE ██████ -->
+<div id="page-admin" class="page" style="flex-direction:column;">
+  <div style="padding:30px;">
+    <div class="admin-header">
+      <span style="font-size:2rem">🛡️</span>
+      <div class="admin-title">لوحة تحكم المدير</div>
+      <div style="flex:1"></div>
+      <button onclick="doAdminLogout()" style="padding:9px 20px;border-radius:99px;border:1px solid var(--admin);background:transparent;color:var(--admin);font-family:var(--font-ar);cursor:pointer;">خروج</button>
+    </div>
+    <div class="admin-grid">
+      <!-- STATS -->
+      <div class="admin-card">
+        <div class="admin-card-title">📊 إحصائيات عامة</div>
+        <div class="admin-stat-row"><span>المستخدمون العاديون</span><span class="admin-stat-val" id="stat-regular">0</span></div>
+        <div class="admin-stat-row"><span>المستخدمون المميزون</span><span class="admin-stat-val" id="stat-vip">0</span></div>
+        <div class="admin-stat-row"><span>غرف الدردشة</span><span class="admin-stat-val" id="stat-rooms-admin">0</span></div>
+        <div class="admin-stat-row"><span>المنشورات</span><span class="admin-stat-val" id="stat-posts-admin">0</span></div>
+      </div>
+      <!-- USERS -->
+      <div class="admin-card" style="grid-column:span 2;">
+        <div class="admin-card-title">👥 المستخدمون</div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <button class="type-btn active" id="filter-all" onclick="filterUsers('all')">الكل</button>
+          <button class="type-btn" id="filter-regular" onclick="filterUsers('regular')">عاديون</button>
+          <button class="type-btn" id="filter-vip" onclick="filterUsers('vip')">مميزون ⭐</button>
+          <button class="type-btn" id="filter-banned" onclick="filterUsers('banned')">محظورون 🚫</button>
+        </div>
+        <div id="admin-users-list"></div>
+      </div>
+      <!-- ROOMS -->
+      <div class="admin-card">
+        <div class="admin-card-title">🏠 غرف الدردشة</div>
+        <div id="admin-rooms-list"></div>
+      </div>
+      <!-- VIP CODES -->
+      <div class="admin-card">
+        <div class="admin-card-title">🔑 رموز الحسابات المميزة</div>
+        <div class="code-list" id="admin-codes-list"></div>
+        <button onclick="generateNewCode()" style="margin-top:12px;width:100%;padding:10px;background:var(--gold-glow);border:1px solid var(--border);border-radius:10px;color:var(--gold2);font-family:var(--font-ar);cursor:pointer;font-size:.88rem;">+ إضافة رمز جديد</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████ MODALS ██████ -->
+<!-- Create Room -->
+<div class="modal-bg" id="modal-create-room">
+  <div class="modal">
+    <div class="modal-title">🏠 إنشاء غرفة دردشة <button class="modal-close" onclick="closeModal('modal-create-room')">✕</button></div>
+    <div class="field-group">
+      <div class="field-wrap">
+        <div class="field-label">اسم الغرفة</div>
+        <input type="text" id="new-room-name" placeholder="اسم الغرفة">
+      </div>
+      <div class="field-wrap">
+        <div class="field-label">وصف الغرفة (اختياري)</div>
+        <input type="text" id="new-room-desc" placeholder="وصف مختصر">
+      </div>
+      <button class="auth-btn" onclick="createRoom()">إنشاء الغرفة</button>
+    </div>
+  </div>
+</div>
+<!-- Poll -->
+<div class="modal-bg" id="modal-poll">
+  <div class="modal">
+    <div class="modal-title">📊 إنشاء استطلاع رأي <button class="modal-close" onclick="closeModal('modal-poll')">✕</button></div>
+    <div class="field-group">
+      <div class="field-wrap">
+        <div class="field-label">السؤال</div>
+        <input type="text" id="poll-question" placeholder="ما رأيك في...">
+      </div>
+      <div id="poll-options-container">
+        <div class="field-label" style="margin-bottom:6px">الخيارات</div>
+        <input type="text" class="poll-opt-input" placeholder="الخيار الأول" style="margin-bottom:8px">
+        <input type="text" class="poll-opt-input" placeholder="الخيار الثاني">
+      </div>
+      <button onclick="addPollOption()" style="background:none;border:1px dashed var(--border);border-radius:8px;padding:9px;color:var(--text2);font-family:var(--font-ar);cursor:pointer;width:100%">+ إضافة خيار</button>
+      <button class="auth-btn" onclick="sendPoll()">إرسال الاستطلاع</button>
+    </div>
+  </div>
+</div>
+<!-- Profile View -->
+<div class="modal-bg" id="modal-profile-view">
+  <div class="modal">
+    <div class="modal-title">👤 الملف الشخصي <button class="modal-close" onclick="closeModal('modal-profile-view')">✕</button></div>
+    <div class="pview-avatar"><img id="pview-avatar" src="" alt=""></div>
+    <div class="pview-name" id="pview-name"></div>
+    <div id="pview-badge-wrap" style="text-align:center;margin:6px 0"></div>
+    <div class="pview-info">
+      <div class="pview-field"><div class="pview-field-label">العمر</div><div class="pview-field-val" id="pview-age">—</div></div>
+      <div class="pview-field"><div class="pview-field-label">النوع</div><div class="pview-field-val" id="pview-gender">—</div></div>
+      <div class="pview-field" style="grid-column:span 2"><div class="pview-field-label">الوصف</div><div class="pview-field-val" id="pview-desc">—</div></div>
+    </div>
+  </div>
+</div>
+<!-- Edit Message -->
+<div class="modal-bg" id="modal-edit-msg">
+  <div class="modal">
+    <div class="modal-title">✏️ تعديل الرسالة <button class="modal-close" onclick="closeModal('modal-edit-msg')">✕</button></div>
+    <textarea id="edit-msg-text" rows="4" style="width:100%;padding:12px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:var(--font-ar);outline:none;font-size:.95rem;"></textarea>
+    <input type="hidden" id="edit-msg-id">
+    <button class="auth-btn" style="margin-top:12px" onclick="confirmEditMsg()">حفظ التعديل</button>
+  </div>
+</div>
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+// ═══════════════════════════════════════
+//  CONFIG — يُقرأ من config.json تلقائياً
+// ═══════════════════════════════════════
+let CONFIG = {
+  telegram: { token: "", chatId: "" },
+  admin: { username: "admin", password: "admin123" },
+  vipCodes: [
+    "VIP-ALPHA-001","VIP-BETA-002","VIP-GAMMA-003","VIP-DELTA-004","VIP-EPSILON-005",
+    "VIP-ZETA-006","VIP-ETA-007","VIP-THETA-008","VIP-IOTA-009","VIP-KAPPA-010",
+    "VIP-LAMBDA-011","VIP-MU-012","VIP-NU-013","VIP-XI-014","VIP-OMICRON-015",
+    "VIP-PI-016","VIP-RHO-017","VIP-SIGMA-018","VIP-TAU-019","VIP-UPSILON-020"
+  ]
+};
+
+// قراءة config.json وتحميل الإعدادات
+async function loadConfig() {
+  try {
+    const res = await fetch('config.json');
+    if (!res.ok) throw new Error('فشل تحميل config.json');
+    const data = await res.json();
+    if (data.telegram) CONFIG.telegram = data.telegram;
+    if (data.admin) CONFIG.admin = data.admin;
+    if (data.vipCodes && Array.isArray(data.vipCodes)) CONFIG.vipCodes = data.vipCodes;
+    console.log('[Config] تم تحميل الإعدادات بنجاح');
+  } catch(e) {
+    console.warn('[Config] لم يتم تحميل config.json، سيتم استخدام الإعدادات الافتراضية:', e.message);
+  }
+}
+// ═══════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════
+let state = {
+  currentUser: null,       // logged in user object
+  users: [],               // all users
+  opportunities: [],       // posts
+  rooms: [],               // chat rooms  {id, name, desc, creatorId, members:[]}
+  messages: {},            // {roomId: [msg,...]}
+  usedVipCodes: [],        // which codes are taken
+  splashSeen: false,
+  activeRoomId: null,
+  replyTo: null,           // {msgId, text, senderName}
+  isRecording: false,
+  mediaRecorder: null,
+  recordedChunks: [],
+  selectedGender: '',
+  selectedVipGender: '',
+  selectedOppType: 'job',
+};
+
+// Persist
+function save() {
+  try {
+    const toSave = Object.assign({}, state);
+    // استبعاد الحقول غير القابلة للتسلسل
+    delete toSave.mediaRecorder;
+    delete toSave.recordedChunks;
+    delete toSave.isRecording;
+    delete toSave.recordStart;
+    delete toSave.recordDuration;
+    localStorage.setItem('tu_state', JSON.stringify(toSave));
+  } catch(e){ console.warn('Save error:', e); }
+}
+function load() {
+  try {
+    const s = localStorage.getItem('tu_state');
+    if (s) {
+      const parsed = JSON.parse(s);
+      Object.assign(state, parsed);
+      // إعادة تعيين الحقول التشغيلية دائماً
+      state.isRecording = false;
+      state.mediaRecorder = null;
+      state.recordedChunks = [];
+      state.recordStart = null;
+      state.recordDuration = 0;
+    }
+  } catch(e){ console.warn('Load error:', e); }
+}
+load();
+// دمج الرموز الإضافية المحفوظة في الـ state
+if (state.extraVipCodes && Array.isArray(state.extraVipCodes)) {
+  state.extraVipCodes.forEach(c => { if (!CONFIG.vipCodes.includes(c)) CONFIG.vipCodes.push(c); });
+}
+
+// ═══════════════════════════════════════
+//  TELEGRAM HELPER
+// ═══════════════════════════════════════
+async function sendToTelegram(text, parseMode = '') {
+  if (!CONFIG.telegram.token || !CONFIG.telegram.chatId) {
+    console.warn('[Telegram] التوكن أو chatId غير مضبوط في config.json');
+    return;
+  }
+  try {
+    const body = { chat_id: CONFIG.telegram.chatId, text };
+    if (parseMode) body.parse_mode = parseMode;
+    const res = await fetch(`https://api.telegram.org/bot${CONFIG.telegram.token}/sendMessage`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+    const result = await res.json();
+    if (!result.ok) console.warn('[Telegram] خطأ:', result.description);
+  } catch(e) {
+    console.warn('[Telegram] فشل الإرسال:', e.message);
+  }
+}
+
+// بناء رسالة تيليجرام منسقة
+function tgMsg(icon, title, lines = []) {
+  const timestamp = new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' });
+  return [icon + ' ' + title, ...lines, '🕐 ' + timestamp].join('\n');
+}
+
+// ═══════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════
+function toast(msg, type='info', duration=3000) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), duration);
+}
+
+// ═══════════════════════════════════════
+//  PAGES
+// ═══════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('page-' + id);
+  if (el) el.classList.add('active');
+}
+function switchView(name, btn) {
+  document.querySelectorAll('.view').forEach(v => {
+    v.classList.add('hidden');
+    v.style.display = 'none';
+  });
+  const target = document.getElementById('view-' + name);
+  if (target) {
+    target.classList.remove('hidden');
+    // view-chat يحتاج flex، الباقي block
+    target.style.display = name === 'chat' ? 'flex' : 'block';
+  }
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (name === 'profile') renderProfile();
+  if (name === 'chat') { renderRooms(); if (state.activeRoomId) openRoom(state.activeRoomId); }
+  if (name === 'opps') renderOpps();
+}
+
+// ═══════════════════════════════════════
+//  SPLASH
+// ═══════════════════════════════════════
+function createStars() {
+  const c = document.getElementById('starsContainer');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:${Math.random()*4}s;`;
+    c.appendChild(s);
+  }
+}
+function enterSite() {
+  state.splashSeen = true; save();
+  if (state.currentUser) { showPage('main'); renderAll(); }
+  else showPage('auth');
+}
+window.addEventListener('load', async () => {
+  await loadConfig();  // تحميل config.json أولاً
+  createStars();
+  if (state.splashSeen && state.currentUser) { showPage('main'); renderAll(); }
+  else if (state.splashSeen) showPage('auth');
+  // else show splash (default)
+});
+
+// ═══════════════════════════════════════
+//  AUTH TABS
+// ═══════════════════════════════════════
+function switchAuthTab(tab) {
+  ['login','register','vip','admin'].forEach(t => {
+    const el = document.getElementById('auth-' + t);
+    if (el) el.classList.add('hidden');
+  });
+  const el = document.getElementById('auth-' + tab);
+  if (el) el.classList.remove('hidden');
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.remove('active');
+    if (b.textContent.includes('دخول') && tab === 'login') b.classList.add('active');
+    if (b.textContent.includes('إنشاء حساب') && !b.textContent.includes('مميز') && tab === 'register') b.classList.add('active');
+    if (b.textContent.includes('مميز') && tab === 'vip') b.classList.add('active');
+  });
+}
+
+// ═══════════════════════════════════════
+//  AVATAR PREVIEW
+// ═══════════════════════════════════════
+function previewAvatar(input, imgId, placeholderId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(imgId);
+    img.src = e.target.result;
+    img.style.display = 'block';
+    document.getElementById(placeholderId).style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+// ═══════════════════════════════════════
+//  GENDER SELECT
+// ═══════════════════════════════════════
+function selectGender(g) {
+  state.selectedGender = g;
+  document.getElementById('g-male').classList.toggle('active', g==='male');
+  document.getElementById('g-female').classList.toggle('active', g==='female');
+}
+function selectGenderVip(g) {
+  state.selectedVipGender = g;
+  document.getElementById('vg-male').classList.toggle('active', g==='male');
+  document.getElementById('vg-female').classList.toggle('active', g==='female');
+}
+
+// ═══════════════════════════════════════
+//  REGISTER
+// ═══════════════════════════════════════
+function doRegister() {
+  const name = document.getElementById('reg-name').value.trim();
+  const age = document.getElementById('reg-age').value;
+  const phone = document.getElementById('reg-phone').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  const desc = document.getElementById('reg-desc').value.trim();
+  const gender = state.selectedGender;
+  const avatarImg = document.getElementById('reg-avatar-preview');
+  const avatar = avatarImg.style.display !== 'none' ? avatarImg.src : '';
+  if (!name || !phone || !pass || !gender) { toast('يرجى ملء جميع الحقول واختيار النوع', 'error'); return; }
+  if (state.users.find(u => u.phone === phone)) { toast('رقم الهاتف مسجل مسبقاً', 'error'); return; }
+  const user = { id: genId(), name, age, phone, pass, desc, gender, avatar, role: 'regular', banned: false, createdAt: now() };
+  state.users.push(user);
+  state.currentUser = user;
+  save();
+  sendToTelegram(tgMsg('👤', 'مستخدم جديد', [
+    '📛 الاسم: ' + name,
+    '📱 الهاتف: ' + phone,
+    '🎂 العمر: ' + age,
+    '🚻 النوع: ' + (gender === 'male' ? 'ذكر' : 'أنثى')
+  ]));
+  toast('تم إنشاء الحساب بنجاح! 🎉', 'success');
+  showPage('main'); renderAll();
+}
+
+function doVipRegister() {
+  const code = document.getElementById('vip-code').value.trim();
+  const name = document.getElementById('vip-name').value.trim();
+  const age = document.getElementById('vip-age').value;
+  const phone = document.getElementById('vip-phone').value.trim();
+  const pass = document.getElementById('vip-pass').value;
+  const desc = document.getElementById('vip-desc').value.trim();
+  const gender = state.selectedVipGender;
+  const avatarImg = document.getElementById('vip-avatar-preview');
+  const avatar = avatarImg.style.display !== 'none' ? avatarImg.src : '';
+  if (!name || !phone || !pass || !gender || !code) { toast('يرجى ملء جميع الحقول', 'error'); return; }
+  if (!CONFIG.vipCodes.includes(code) || state.usedVipCodes.includes(code)) { toast('الرمز غير صحيح أو مستخدم مسبقاً', 'error'); return; }
+  if (state.users.find(u => u.phone === phone)) { toast('رقم الهاتف مسجل مسبقاً', 'error'); return; }
+  const user = { id: genId(), name, age, phone, pass, desc, gender, avatar, role: 'vip', banned: false, createdAt: now(), vipCode: code };
+  state.users.push(user);
+  state.usedVipCodes.push(code);
+  state.currentUser = user;
+  save();
+  sendToTelegram(tgMsg('⭐', 'مستخدم مميز جديد', [
+    '📛 الاسم: ' + name,
+    '📱 الهاتف: ' + phone,
+    '🎂 العمر: ' + age,
+    '🔑 الرمز المستخدم: ' + code
+  ]));
+  toast('تم إنشاء الحساب المميز بنجاح! ⭐', 'success');
+  showPage('main'); renderAll();
+}
+
+function doLogin() {
+  const phone = document.getElementById('login-phone').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const user = state.users.find(u => u.phone === phone && u.pass === pass);
+  if (!user) { toast('بيانات غير صحيحة', 'error'); return; }
+  if (user.banned) { toast('هذا الحساب محظور', 'error'); return; }
+  // استخدام نسخة محدثة من الـ users array دائماً
+  state.currentUser = state.users.find(u => u.id === user.id) || user;
+  save();
+  toast(`مرحباً ${state.currentUser.name} 👋`, 'success');
+  showPage('main'); renderAll();
+}
+
+function doAdminLogin() {
+  const u = document.getElementById('admin-user').value.trim();
+  const p = document.getElementById('admin-pass').value;
+  if (u === CONFIG.admin.username && p === CONFIG.admin.password) {
+    toast('مرحباً بالمدير 🛡️', 'success');
+    showPage('admin'); renderAdmin();
+  } else { toast('بيانات المدير غير صحيحة', 'error'); }
+}
+function doAdminLogout() { showPage('auth'); }
+function doLogout() { state.currentUser = null; save(); showPage('auth'); }
+
+// ═══════════════════════════════════════
+//  RENDER ALL
+// ═══════════════════════════════════════
+function renderAll() {
+  renderOpps();
+  renderRooms();
+  renderProfile();
+  // compose area visibility
+  const cu = state.currentUser;
+  const canPost = cu && (cu.role === 'admin' || cu.role === 'vip');
+  const composeEl = document.getElementById('opps-compose-area');
+  const createRoomEl = document.getElementById('create-room-wrap');
+  const pollBtnEl = document.getElementById('poll-btn-wrap');
+  if (composeEl) composeEl.classList.toggle('hidden', !canPost);
+  if (createRoomEl) createRoomEl.classList.toggle('hidden', !canPost);
+  if (pollBtnEl) pollBtnEl.classList.toggle('hidden', !canPost);
+}
+
+// ═══════════════════════════════════════
+//  OPPORTUNITIES
+// ═══════════════════════════════════════
+function selectOppType(type) {
+  state.selectedOppType = type;
+  document.getElementById('t-job').classList.toggle('active', type==='job');
+  document.getElementById('t-grant').classList.toggle('active', type==='grant');
+}
+function postOpp() {
+  const text = document.getElementById('opp-text').value.trim();
+  if (!text) { toast('اكتب محتوى المنشور أولاً', 'error'); return; }
+  const cu = state.currentUser;
+  const opp = {
+    id: genId(), type: state.selectedOppType, text,
+    senderId: cu.id, senderName: cu.name, senderAvatar: cu.avatar,
+    createdAt: now()
+  };
+  state.opportunities.unshift(opp);
+  save();
+  document.getElementById('opp-text').value = '';
+  sendToTelegram(tgMsg('📌', 'منشور جديد', [
+    '👤 الناشر: ' + cu.name,
+    '🏷️ النوع: ' + (state.selectedOppType === 'job' ? 'وظيفة' : 'منحة'),
+    '📝 المحتوى: ' + text.substring(0, 200)
+  ]));
+  renderOpps();
+  toast('تم النشر بنجاح', 'success');
+}
+function renderOpps() {
+  const feed = document.getElementById('opps-feed');
+  if (!state.opportunities.length) {
+    feed.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>لا توجد منشورات بعد</div>';
+    return;
+  }
+  feed.innerHTML = state.opportunities.map(o => {
+    const tagClass = o.type === 'job' ? 'tag-job' : 'tag-grant';
+    const tagText = o.type === 'job' ? '💼 وظيفة' : '🎓 منحة';
+    return `<div class="opp-card">
+      <span class="opp-tag ${tagClass}">${tagText}</span>
+      <div class="opp-body">${escHtml(o.text)}</div>
+      <div class="opp-footer">
+        <div class="opp-avatar"><img src="${o.senderAvatar||defaultAvatar()}" onerror="this.src='${defaultAvatar()}'"></div>
+        <div class="opp-meta">
+          <span class="opp-sender">${escHtml(o.senderName)}</span><br>
+          ${formatDate(o.createdAt)}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════
+//  CHAT ROOMS
+// ═══════════════════════════════════════
+function renderRooms() {
+  const list = document.getElementById('rooms-list');
+  const globalRoom = { id: 'global', name: 'الدردشة العامة', isGlobal: true };
+  const allRooms = [globalRoom, ...state.rooms];
+  const cu = state.currentUser;
+  list.innerHTML = allRooms.map(r => {
+    const isActive = r.id === state.activeRoomId;
+    const iconClass = r.isGlobal ? 'room-global' : 'room-vip-icon';
+    return `<div class="room-item ${isActive?'active':''}" onclick="openRoom('${r.id}')">
+      <div class="room-icon ${iconClass}">${r.isGlobal?'🌐':'🏠'}</div>
+      <div class="room-info">
+        <div class="room-name">${escHtml(r.name)}</div>
+        ${!r.isGlobal ? `<div class="room-id">#${r.id}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+function filterRooms(q) {
+  document.querySelectorAll('.room-item').forEach(item => {
+    const id = item.querySelector('.room-id')?.textContent || '';
+    const name = item.querySelector('.room-name')?.textContent || '';
+    item.style.display = (name.includes(q) || id.includes(q)) ? '' : 'none';
+  });
+}
+function openCreateRoom() { openModal('modal-create-room'); }
+function createRoom() {
+  const name = document.getElementById('new-room-name').value.trim();
+  if (!name) { toast('ادخل اسم الغرفة', 'error'); return; }
+  const cu = state.currentUser;
+  const room = { id: genId().substring(0,8).toUpperCase(), name, desc: document.getElementById('new-room-desc').value.trim(), creatorId: cu.id, members: [cu.id], createdAt: now() };
+  state.rooms.push(room);
+  state.messages[room.id] = [];
+  save();
+  // مسح الحقول بعد الإنشاء
+  document.getElementById('new-room-name').value = '';
+  document.getElementById('new-room-desc').value = '';
+  closeModal('modal-create-room');
+  renderRooms();
+  openRoom(room.id);
+  toast(`تم إنشاء الغرفة: ${name}`, 'success');
+  sendToTelegram(tgMsg('🏠', 'غرفة جديدة', [
+    '📛 الاسم: ' + name,
+    '🆔 الرقم: ' + room.id,
+    '👤 المنشئ: ' + cu.name
+  ]));
+}
+function openRoom(roomId) {
+  state.activeRoomId = roomId;
+  // تهيئة قائمة الرسائل إن لم تكن موجودة
+  if (!state.messages[roomId]) state.messages[roomId] = [];
+  save();
+  renderRooms();
+  const room = roomId === 'global' ? { name: 'الدردشة العامة', id: 'global' } : state.rooms.find(r => r.id === roomId);
+  if (!room) return;
+  document.getElementById('chat-room-name').textContent = room.name;
+  document.getElementById('chat-room-id').textContent = room.id !== 'global' ? `#${room.id}` : '';
+  document.getElementById('chat-input-area').style.display = 'block';
+  renderMessages(roomId);
+}
+function renderMessages(roomId) {
+  const msgs = state.messages[roomId] || [];
+  const container = document.getElementById('chat-messages');
+  if (!msgs.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">💬</div>لا توجد رسائل بعد، كن أول من يكتب!</div>';
+    return;
+  }
+  const cu = state.currentUser;
+  container.innerHTML = msgs.map(m => renderMsg(m, cu)).join('');
+  container.scrollTop = container.scrollHeight;
+}
+function renderMsg(m, cu) {
+  const isMine = cu && m.senderId === cu.id;
+  const senderUser = state.users.find(u => u.id === m.senderId);
+  const sender = senderUser || { name: m.senderName, avatar: '', gender: '', role: '' };
+  const genderIcon = sender.gender === 'male' ? '♂' : sender.gender === 'female' ? '♀' : '';
+  const canEdit = isMine && (Date.now() - new Date(m.createdAt).getTime() < 10*60*1000);
+  const canDelete = isMine && (Date.now() - new Date(m.createdAt).getTime() < 10*60*1000);
+  const isAdmin = cu && cu.role === 'admin';
+
+  let content = '';
+  if (m.type === 'text') content = `<div>${escHtml(m.text)}</div>`;
+  else if (m.type === 'audio') content = `<div class="audio-msg"><button class="audio-play-btn" onclick="playAudio('${m.id}')">▶</button><div class="audio-wave"></div><span style="font-size:.75rem;color:var(--text3)">${m.duration||'0'}ث</span></div>`;
+  else if (m.type === 'image') content = `<div class="img-msg"><img src="${m.src}" onclick="window.open('${m.src}','_blank')"></div>`;
+  else if (m.type === 'file') content = `<div class="file-msg" onclick="downloadFile('${m.id}')"><span class="file-icon">📄</span><div><div class="file-name">${escHtml(m.fileName||'ملف')}</div><div class="file-size">${m.fileSize||''}</div></div></div>`;
+  else if (m.type === 'poll') content = renderPoll(m, cu);
+
+  const replyRef = m.replyTo ? `<div class="msg-reply-ref">↩ رد على: ${escHtml(m.replyToText||'...')}</div>` : '';
+  const replyIndicator = m.replies && m.replies.length ? `<div class="reply-indicator">💬 تم الرد عليها</div>` : '';
+  const editDeleteBtns = `
+    ${canEdit || isAdmin ? `<button class="msg-action-btn" data-msgid="${m.id}" onclick="editMsg(this.dataset.msgid)">تعديل</button>` : ''}
+    ${canDelete || isAdmin ? `<button class="msg-action-btn" data-msgid="${m.id}" style="color:var(--admin)" onclick="deleteMsg(this.dataset.msgid)">حذف</button>` : ''}
+    <button class="msg-action-btn" onclick="replyToMsg('${m.id}',this)">رد</button>
+  `;
+
+  return `<div class="msg-wrap ${isMine?'mine':'other'}" id="msg-${m.id}">
+    <div class="msg-avatar" onclick="viewProfile('${m.senderId}')">
+      <img src="${sender.avatar||defaultAvatar()}" onerror="this.src='${defaultAvatar()}'">
+    </div>
+    <div class="msg-body">
+      <div class="msg-header">
+        <span class="msg-name">${escHtml(sender.name)}</span>
+        <span class="msg-gender">${genderIcon}</span>
+        ${sender.role==='vip'?'<span class="vip-text" style="font-size:.7rem">⭐</span>':''}
+        ${sender.role==='admin'?'<span class="admin-text" style="font-size:.7rem">🛡️</span>':''}
+        ${msg.edited?'<span style="font-size:.68rem;color:var(--text3)">(معدّل)</span>':''}
+      </div>
+      <div class="msg-bubble">
+        ${replyRef}
+        ${content}
+        <div class="msg-actions">${editDeleteBtns}</div>
+      </div>
+      <div class="msg-time">${formatTime(m.createdAt)}</div>
+      ${replyIndicator}
+    </div>
+  </div>`;
+}
+function renderPoll(m, cu) {
+  const totalVotes = m.pollOptions.reduce((s,o) => s + (o.votes||0), 0);
+  const voted = m.voters && m.voters.includes(cu?.id);
+  return `<div class="poll-card">
+    <div class="poll-question">${escHtml(m.pollQuestion)}</div>
+    ${m.pollOptions.map((o,i) => {
+      const pct = totalVotes ? Math.round((o.votes||0)/totalVotes*100) : 0;
+      return `<div class="poll-option" onclick="event.stopPropagation();votePoll('${m.id}',${i})">
+        <span>${escHtml(o.text)}</span>
+        <span style="margin-right:auto;font-size:.8rem;color:var(--text3)">${pct}%</span>
+      </div>`;
+    }).join('')}
+    <div style="font-size:.75rem;color:var(--text3);margin-top:6px">${totalVotes} أصوات</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+//  SEND MESSAGE
+// ═══════════════════════════════════════
+function sendMessage(type='text', extra={}) {
+  const cu = state.currentUser;
+  if (!cu || !state.activeRoomId) return;
+  const inputEl = document.getElementById('chat-input');
+  const text = type === 'text' ? inputEl.value.trim() : '';
+  if (type === 'text' && !text) return;
+  const rid = state.activeRoomId;
+  if (!state.messages[rid]) state.messages[rid] = [];
+  const msg = {
+    id: genId(), senderId: cu.id, senderName: cu.name,
+    type, text, createdAt: now(), ...extra,
+    replyTo: state.replyTo ? state.replyTo.msgId : null,
+    replyToText: state.replyTo ? state.replyTo.text : null,
+    replies: []
+  };
+  // mark the replied-to message
+  if (state.replyTo) {
+    const orig = state.messages[rid].find(m => m.id === state.replyTo.msgId);
+    if (orig) { if (!orig.replies) orig.replies = []; orig.replies.push(msg.id); }
+  }
+  state.messages[rid].push(msg);
+  save();
+  // إرسال إشعار تيليجرام للرسائل النصية فقط
+  if (type === 'text' && text) {
+    const roomName = rid === 'global' ? 'الدردشة العامة' : (state.rooms.find(r=>r.id===rid)?.name || rid);
+    sendToTelegram(tgMsg('💬', 'رسالة جديدة', [
+      '👤 المرسل: ' + cu.name,
+      '🏠 الغرفة: ' + roomName,
+      '💬 الرسالة: ' + text.substring(0, 300)
+    ]));
+  }
+  inputEl.value = ''; inputEl.style.height = 'auto';
+  cancelReply();
+  renderMessages(rid);
+}
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
+
+// ═══════════════════════════════════════
+//  REPLY
+// ═══════════════════════════════════════
+function replyToMsg(msgId, btnOrText, senderName) {
+  // يدعم الاستدعاء القديم (msgId, text, senderName) والجديد (msgId, btn)
+  let text = '', name = '';
+  if (typeof btnOrText === 'string') {
+    text = btnOrText; name = senderName || '';
+  } else {
+    // ابحث عن الرسالة من الـ state
+    const rid = state.activeRoomId;
+    const msg = (state.messages[rid] || []).find(m => m.id === msgId);
+    if (msg) {
+      text = msg.text || '';
+      const sender = state.users.find(u => u.id === msg.senderId) || { name: msg.senderName };
+      name = sender.name || '';
+    }
+  }
+  state.replyTo = { msgId, text, senderName: name };
+  const preview = document.getElementById('reply-preview');
+  document.getElementById('reply-preview-text').textContent = `↩ رد على ${name}: ${text.substring(0,40)}`;
+  preview.classList.add('show');
+  document.getElementById('chat-input').focus();
+}
+function cancelReply() {
+  state.replyTo = null;
+  document.getElementById('reply-preview').classList.remove('show');
+}
+
+// ═══════════════════════════════════════
+//  EDIT / DELETE MSG
+// ═══════════════════════════════════════
+function editMsg(msgId) {
+  const cu = state.currentUser;
+  const rid = state.activeRoomId;
+  const msg = state.messages[rid]?.find(m => m.id === msgId);
+  if (!msg) return;
+  const canEdit = (msg.senderId === cu.id && (Date.now() - new Date(msg.createdAt).getTime() < 10*60*1000)) || cu.role === 'admin';
+  if (!canEdit) { toast('انتهت مهلة التعديل (10 دقائق)', 'error'); return; }
+  document.getElementById('edit-msg-text').value = msg.text;
+  document.getElementById('edit-msg-id').value = msgId;
+  openModal('modal-edit-msg');
+}
+function confirmEditMsg() {
+  const msgId = document.getElementById('edit-msg-id').value;
+  const newText = document.getElementById('edit-msg-text').value.trim();
+  if (!newText) { toast('لا يمكن أن تكون الرسالة فارغة', 'error'); return; }
+  const rid = state.activeRoomId;
+  if (!rid || !state.messages[rid]) return;
+  const msg = state.messages[rid].find(m => m.id === msgId);
+  if (!msg) return;
+  msg.text = newText; msg.edited = true;
+  save(); closeModal('modal-edit-msg'); renderMessages(rid);
+  toast('تم تعديل الرسالة', 'success');
+}
+function deleteMsg(msgId) {
+  const cu = state.currentUser;
+  const rid = state.activeRoomId;
+  if (!rid || !state.messages[rid]) return;
+  const idx = state.messages[rid].findIndex(m => m.id === msgId);
+  if (idx === -1 || idx === undefined) return;
+  const msg = state.messages[rid][idx];
+  const canDel = (msg.senderId === cu.id && (Date.now() - new Date(msg.createdAt).getTime() < 10*60*1000)) || cu.role === 'admin';
+  if (!canDel) { toast('انتهت مهلة الحذف', 'error'); return; }
+  state.messages[rid].splice(idx, 1);
+  save(); renderMessages(rid);
+  toast('تم حذف الرسالة', 'info');
+}
+
+// ═══════════════════════════════════════
+//  VOICE RECORD
+// ═══════════════════════════════════════
+async function toggleVoiceRecord() {
+  const btn = document.getElementById('voice-btn');
+  if (!state.isRecording) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      state.mediaRecorder = new MediaRecorder(stream);
+      state.recordedChunks = [];
+      state.mediaRecorder.ondataavailable = e => { if (e.data.size > 0) state.recordedChunks.push(e.data); };
+      state.mediaRecorder.onstop = () => {
+        const blob = new Blob(state.recordedChunks, { type: 'audio/webm' });
+        const reader = new FileReader();
+        reader.onload = ev => { sendMessage('audio', { src: ev.target.result, duration: Math.round(state.recordDuration||0) }); };
+        reader.readAsDataURL(blob);
+        stream.getTracks().forEach(t => t.stop());
+      };
+      state.mediaRecorder.start();
+      state.isRecording = true;
+      state.recordStart = Date.now();
+      btn.classList.add('recording');
+      btn.textContent = '⏹';
+      toast('جارٍ التسجيل...', 'info');
+    } catch(e) { toast('لا يمكن الوصول للميكروفون', 'error'); }
+  } else {
+    state.recordDuration = (Date.now() - state.recordStart) / 1000;
+    state.mediaRecorder.stop();
+    state.isRecording = false;
+    btn.classList.remove('recording');
+    btn.textContent = '🎤';
+  }
+}
+function playAudio(msgId) {
+  const rid = state.activeRoomId;
+  const msg = state.messages[rid]?.find(m => m.id === msgId);
+  if (!msg?.src) return;
+  const audio = new Audio(msg.src);
+  audio.play();
+}
+
+// ═══════════════════════════════════════
+//  FILE ATTACH
+// ═══════════════════════════════════════
+function handleFileAttach(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const isImage = file.type.startsWith('image/');
+    if (isImage) sendMessage('image', { src: e.target.result, fileName: file.name });
+    else sendMessage('file', { src: e.target.result, fileName: file.name, fileSize: formatBytes(file.size) });
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+function downloadFile(msgId) {
+  const rid = state.activeRoomId;
+  const msg = state.messages[rid]?.find(m => m.id === msgId);
+  if (!msg?.src) return;
+  const a = document.createElement('a'); a.href = msg.src; a.download = msg.fileName||'file'; a.click();
+}
+
+// ═══════════════════════════════════════
+//  POLL
+// ═══════════════════════════════════════
+function openPollModal() { openModal('modal-poll'); }
+function addPollOption() {
+  const c = document.getElementById('poll-options-container');
+  const inp = document.createElement('input');
+  inp.type = 'text'; inp.className = 'poll-opt-input';
+  inp.placeholder = `الخيار ${c.querySelectorAll('.poll-opt-input').length+1}`;
+  inp.style.marginTop = '8px';
+  c.appendChild(inp);
+}
+function sendPoll() {
+  const question = document.getElementById('poll-question').value.trim();
+  const opts = [...document.querySelectorAll('.poll-opt-input')].map(i => ({ text: i.value.trim(), votes: 0 })).filter(o => o.text);
+  if (!question || opts.length < 2) { toast('أضف سؤالاً وخيارين على الأقل', 'error'); return; }
+  sendMessage('poll', { pollQuestion: question, pollOptions: opts, voters: [] });
+  closeModal('modal-poll');
+}
+function votePoll(msgId, optIdx) {
+  const cu = state.currentUser;
+  const rid = state.activeRoomId;
+  const msg = state.messages[rid]?.find(m => m.id === msgId);
+  if (!msg || msg.voters?.includes(cu.id)) { toast('لقد صوّت مسبقاً', 'error'); return; }
+  if (!msg.voters) msg.voters = [];
+  msg.voters.push(cu.id);
+  msg.pollOptions[optIdx].votes = (msg.pollOptions[optIdx].votes||0) + 1;
+  save(); renderMessages(rid);
+}
+
+// ═══════════════════════════════════════
+//  PROFILE
+// ═══════════════════════════════════════
+function renderProfile() {
+  const cu = state.currentUser;
+  if (!cu) return;
+  document.getElementById('prof-avatar-img').src = cu.avatar || defaultAvatar();
+  document.getElementById('prof-name-display').textContent = cu.name;
+  document.getElementById('prof-name-input').value = cu.name;
+  document.getElementById('prof-desc-input').value = cu.desc || '';
+  // badge
+  const badgeWrap = document.getElementById('prof-badge-wrap');
+  if (cu.role === 'vip') badgeWrap.innerHTML = '<span class="profile-badge badge-vip">⭐ مستخدم مميز</span>';
+  else if (cu.role === 'admin') badgeWrap.innerHTML = '<span class="profile-badge badge-admin">🛡️ مدير</span>';
+  else badgeWrap.innerHTML = '';
+  // vip stats
+  const statsEl = document.getElementById('prof-stats');
+  if (cu.role === 'vip' || cu.role === 'admin') {
+    statsEl.classList.remove('hidden');
+    const myPosts = state.opportunities.filter(o => o.senderId === cu.id).length;
+    const myRooms = state.rooms.filter(r => r.creatorId === cu.id);
+    const totalMembers = myRooms.reduce((s,r) => s + (r.members?.length||0), 0);
+    document.getElementById('stat-posts').textContent = myPosts;
+    document.getElementById('stat-rooms').textContent = myRooms.length;
+    document.getElementById('stat-members').textContent = totalMembers;
+  } else statsEl.classList.add('hidden');
+}
+function saveProfile() {
+  const cu = state.currentUser;
+  const name = document.getElementById('prof-name-input').value.trim();
+  const desc = document.getElementById('prof-desc-input').value.trim();
+  if (!name) { toast('الاسم لا يمكن أن يكون فارغاً', 'error'); return; }
+  cu.name = name; cu.desc = desc;
+  const idx = state.users.findIndex(u => u.id === cu.id);
+  if (idx !== -1) {
+    state.users[idx] = Object.assign({}, state.users[idx], { name, desc });
+    state.currentUser = state.users[idx];
+  } else {
+    state.currentUser = cu;
+  }
+  save(); renderProfile();
+  toast('تم حفظ التغييرات', 'success');
+}
+function updateProfileAvatar(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const cu = state.currentUser;
+    cu.avatar = e.target.result;
+    const idx = state.users.findIndex(u => u.id === cu.id);
+    if (idx !== -1) state.users[idx].avatar = e.target.result;
+    state.currentUser = cu;
+    save(); renderProfile();
+    toast('تم تحديث الصورة', 'success');
+  };
+  reader.readAsDataURL(file);
+}
+
+// ═══════════════════════════════════════
+//  VIEW USER PROFILE
+// ═══════════════════════════════════════
+function viewProfile(userId) {
+  if (!userId) return;
+  const user = state.users.find(u => u.id === userId);
+  if (!user) { toast('لم يتم العثور على الملف الشخصي', 'error'); return; }
+  document.getElementById('pview-avatar').src = user.avatar || defaultAvatar();
+  document.getElementById('pview-name').textContent = user.name;
+  const badge = user.role === 'vip' ? '<span class="profile-badge badge-vip">⭐ مميز</span>' : user.role === 'admin' ? '<span class="profile-badge badge-admin">🛡️ مدير</span>' : '';
+  document.getElementById('pview-badge-wrap').innerHTML = badge;
+  document.getElementById('pview-age').textContent = user.age || '—';
+  document.getElementById('pview-gender').textContent = user.gender === 'male' ? '♂ ذكر' : user.gender === 'female' ? '♀ أنثى' : '—';
+  document.getElementById('pview-desc').textContent = user.desc || 'لا يوجد وصف';
+  openModal('modal-profile-view');
+}
+
+// ═══════════════════════════════════════
+//  SETTINGS
+// ═══════════════════════════════════════
+function toggleSettings() {
+  document.getElementById('settings-dropdown').classList.toggle('show');
+}
+document.addEventListener('click', e => {
+  const dd = document.getElementById('settings-dropdown');
+  if (dd && !e.target.closest('.profile-settings-btn') && !e.target.closest('.settings-dropdown')) {
+    dd.classList.remove('show');
+  }
+});
+let isDark = true;
+function toggleTheme() {
+  isDark = !isDark;
+  document.body.classList.toggle('light', !isDark);
+  document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';
+  document.getElementById('theme-label').textContent = isDark ? 'الوضع الليلي' : 'الوضع النهاري';
+}
+
+// ═══════════════════════════════════════
+//  ADMIN PANEL
+// ═══════════════════════════════════════
+function renderAdmin() {
+  // stats
+  document.getElementById('stat-regular').textContent = state.users.filter(u => u.role==='regular').length;
+  document.getElementById('stat-vip').textContent = state.users.filter(u => u.role==='vip').length;
+  document.getElementById('stat-rooms-admin').textContent = state.rooms.length;
+  document.getElementById('stat-posts-admin').textContent = state.opportunities.length;
+  filterUsers('all');
+  renderAdminRooms();
+  renderAdminCodes();
+}
+let currentUserFilter = 'all';
+function filterUsers(f) {
+  currentUserFilter = f;
+  ['all','regular','vip','banned'].forEach(t => document.getElementById('filter-'+t)?.classList.toggle('active', t===f));
+  let users = [...state.users];
+  if (f === 'regular') users = users.filter(u => u.role==='regular' && !u.banned);
+  if (f === 'vip') users = users.filter(u => u.role==='vip');
+  if (f === 'banned') users = users.filter(u => u.banned);
+  const list = document.getElementById('admin-users-list');
+  if (!users.length) { list.innerHTML = '<div style="color:var(--text3);font-size:.85rem;padding:8px">لا يوجد مستخدمون</div>'; return; }
+  list.innerHTML = users.map(u => `<div class="user-row">
+    <div class="user-row-avatar"><img src="${u.avatar||defaultAvatar()}" onerror="this.src='${defaultAvatar()}'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>
+    <div class="user-row-info">
+      <div class="user-row-name">${escHtml(u.name)} ${u.role==='vip'?'⭐':''} ${u.banned?'🚫':''}</div>
+      <div class="user-row-phone">${u.phone}</div>
+    </div>
+    <div class="user-actions">
+      ${u.banned ? `<button class="ua-btn ua-unban" onclick="unbanUser('${u.id}')">رفع الحظر</button>` : `<button class="ua-btn ua-ban" onclick="banUser('${u.id}')">حظر</button>`}
+      <button class="ua-btn ua-del" onclick="deleteUser('${u.id}')">حذف</button>
+    </div>
+  </div>`).join('');
+}
+function banUser(id) {
+  const u = state.users.find(u => u.id===id);
+  if (u) {
+    u.banned = true; save(); renderAdmin(); toast('تم حظر المستخدم', 'info');
+    sendToTelegram(tgMsg('🚫', 'حظر مستخدم', ['📛 الاسم: ' + u.name, '📱 الهاتف: ' + u.phone]));
+  }
+}
+function unbanUser(id) {
+  const u = state.users.find(u => u.id===id);
+  if (u) { u.banned = false; save(); renderAdmin(); toast('تم رفع الحظر', 'success'); }
+}
+function deleteUser(id) {
+  if (!confirm('هل أنت متأكد من حذف هذا الحساب؟')) return;
+  const u = state.users.find(u => u.id===id);
+  state.users = state.users.filter(u => u.id!==id);
+  save(); renderAdmin(); toast('تم حذف الحساب', 'info');
+  if (u) sendToTelegram(tgMsg('🗑️', 'حذف حساب', ['📛 الاسم: ' + u.name, '📱 الهاتف: ' + u.phone]));
+}
+function renderAdminRooms() {
+  const list = document.getElementById('admin-rooms-list');
+  if (!state.rooms.length) { list.innerHTML = '<div style="color:var(--text3);font-size:.85rem">لا توجد غرف</div>'; return; }
+  list.innerHTML = state.rooms.map(r => `<div class="user-row">
+    <div class="user-row-info">
+      <div class="user-row-name">🏠 ${escHtml(r.name)}</div>
+      <div class="user-row-phone">#${r.id} · ${r.members?.length||0} عضو</div>
+    </div>
+    <div class="user-actions">
+      <button class="ua-btn ua-del" onclick="adminDeleteRoom('${r.id}')">حذف</button>
+    </div>
+  </div>`).join('');
+}
+function adminDeleteRoom(id) {
+  state.rooms = state.rooms.filter(r => r.id!==id);
+  delete state.messages[id];
+  save(); renderAdmin(); toast('تم حذف الغرفة', 'info');
+}
+function renderAdminCodes() {
+  const list = document.getElementById('admin-codes-list');
+  list.innerHTML = CONFIG.vipCodes.map(c => {
+    const used = state.usedVipCodes.includes(c);
+    return `<div class="code-item ${used?'code-used':''}">
+      <span>${c}</span>
+      <span class="code-status ${used?'code-taken':'code-avail'}">${used?'مستخدم':'متاح'}</span>
+    </div>`;
+  }).join('');
+}
+function generateNewCode() {
+  const code = 'VIP-' + Math.random().toString(36).substring(2,7).toUpperCase() + '-' + Math.floor(Math.random()*900+100);
+  CONFIG.vipCodes.push(code);
+  if (!state.extraVipCodes) state.extraVipCodes = [];
+  state.extraVipCodes.push(code);
+  save();
+  renderAdminCodes();
+  toast(`رمز جديد: ${code}`, 'success');
+}
+
+// ═══════════════════════════════════════
+//  MODAL HELPERS
+// ═══════════════════════════════════════
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+document.querySelectorAll('.modal-bg').forEach(bg => {
+  bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('show'); });
+});
+
+// ═══════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════
+function genId() { return Math.random().toString(36).substring(2) + Date.now().toString(36); }
+function now() { return new Date().toISOString(); }
+function escHtml(s) { if (!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function defaultAvatar() { return `data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" fill="#222636"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#c9a84c" font-size="18">👤</text></svg>')}`; }
+function formatDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return d.toLocaleDateString('ar-EG', { weekday:'short', day:'numeric', month:'short' }) + ' ' + d.toLocaleTimeString('ar-EG', { hour:'2-digit', minute:'2-digit' });
+}
+function formatTime(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleTimeString('ar-EG', { hour:'2-digit', minute:'2-digit' });
+}
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1048576).toFixed(1) + ' MB';
+}
+</script>
+</body>
+</html>

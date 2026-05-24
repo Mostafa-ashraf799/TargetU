@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق الدردشة المتقدم</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --secondary: #764ba2;
+            --success: #48bb78;
+            --danger: #f56565;
+            --warning: #ed8936;
+            --bg-dark: #1a202c;
+            --bg-light: #2d3748;
+            --bg-lighter: #4a5568;
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e0;
+            --text-tertiary: #a0aec0;
+            --border-color: #4a5568;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --radius: 12px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        /* ============ CONTAINERS ============ */
+        .container {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .container.active {
+            display: flex;
+        }
+
+        /* ============ LOGIN PAGE ============ */
+        #login-container {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .login-card {
+            background: var(--bg-dark);
+            border-radius: var(--radius);
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-header p {
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .signup-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .signup-fields .form-group {
+            grid-column: span 1;
+            margin-bottom: 10px;
+        }
+
+        .signup-fields .form-group:nth-child(3) {
+            grid-column: span 2;
+        }
+
+        /* ============ CHAT PAGE ============ */
+        #chat-container {
+            flex-direction: row;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--bg-light);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .rooms-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .room-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .room-item:hover {
+            background: var(--bg-lighter);
+        }
+
+        .room-item.active {
+            background: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .room-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .room-id {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-family: monospace;
+        }
+
+        .sidebar-footer {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-new-room {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-new-room:hover {
+            background: var(--primary-dark);
+        }
+
+        .main-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header-info h2 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .chat-header-info p {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .chat-header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            color: var(--primary);
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-tertiary);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            animation: messageIn 0.3s ease;
+        }
+
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.own {
+            justify-content: flex-end;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .message-content {
+            max-width: 60%;
+        }
+
+        .message.own .message-content {
+            max-width: 60%;
+        }
+
+        .message-header {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+        }
+
+        .message-bubble {
+            background: var(--bg-light);
+            padding: 12px 16px;
+            border-radius: 12px;
+            word-wrap: break-word;
+            position: relative;
+        }
+
+        .message.own .message-bubble {
+            background: var(--primary);
+            color: white;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .message.own .message-time {
+            text-align: left;
+        }
+
+        .message-image {
+            max-width: 300px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 8px 0;
+        }
+
+        .message-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-lighter);
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .message-file:hover {
+            background: var(--border-color);
+        }
+
+        .file-icon {
+            font-size: 20px;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .file-size {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-lighter);
+            padding: 10px 12px;
+            border-radius: 8px;
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .audio-wave {
+            flex: 1;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .audio-bar {
+            width: 2px;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 1px;
+            animation: wave 0.6s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { height: 20%; }
+            50% { height: 100%; }
+        }
+
+        .input-area {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: var(--primary);
+        }
+
+        .input-field {
+            flex: 1;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            padding: 10px 12px;
+            font-size: 14px;
+            resize: none;
+            max-height: 100px;
+            font-family: inherit;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* ============ PROFILE PAGE ============ */
+        #profile-container {
+            flex-direction: column;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .profile-card {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .profile-avatar-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin: 0 auto 15px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-avatar:hover::after {
+            content: '✏️';
+            position: absolute;
+            font-size: 24px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .profile-role {
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        .profile-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .profile-field label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .profile-field input,
+        .profile-field textarea {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .profile-field input:focus,
+        .profile-field textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            background: var(--bg-dark);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* ============ MODAL ============ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* ============ TOAST ============ */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            z-index: 2000;
+            animation: slideUp 0.3s ease;
+        }
+
+        .toast.success {
+            border-left-color: var(--success);
+        }
+
+        .toast.error {
+            border-left-color: var(--danger);
+        }
+
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+
+        /* ============ SCROLLBAR ============ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+                border-left: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .rooms-list {
+                display: flex;
+                overflow-x: auto;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .room-item {
+                flex-shrink: 0;
+                min-width: 150px;
+            }
+
+            .main-chat {
+                height: calc(100vh - 200px);
+            }
+
+            .message-content {
+                max-width: 80%;
+            }
+
+            .signup-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .signup-fields .form-group:nth-child(3) {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN CONTAINER -->
+    <div id="login-container" class="container active">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>💬 الدردشة</h1>
+                <p>تطبيق دردشة متقدم وآمن</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">تسجيل الدخول</button>
+                <button class="tab-btn" onclick="switchTab('signup')">إنشاء حساب</button>
+            </div>
+
+            <!-- LOGIN TAB -->
+            <div id="login-tab" class="tab-content active">
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="login-phone" placeholder="أدخل رقم الهاتف">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="login-password" placeholder="أدخل كلمة المرور">
+                </div>
+                <button class="btn" onclick="login()">دخول</button>
+            </div>
+
+            <!-- SIGNUP TAB -->
+            <div id="signup-tab" class="tab-content">
+                <div class="signup-fields">
+                    <div class="form-group">
+                        <label>الاسم</label>
+                        <input type="text" id="signup-name" placeholder="اسمك الكامل">
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الهاتف</label>
+                        <input type="tel" id="signup-phone" placeholder="رقم الهاتف">
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        <input type="password" id="signup-password" placeholder="اختر كلمة مرور قوية">
+                    </div>
+                    <div class="form-group">
+                        <label>العمر</label>
+                        <input type="number" id="signup-age" placeholder="عمرك">
+                    </div>
+                    <div class="form-group">
+                        <label>النوع</label>
+                        <select id="signup-gender">
+                            <option value="">اختر</option>
+                            <option value="male">ذكر</option>
+                            <option value="female">أنثى</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn" onclick="signup()">إنشاء حساب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHAT CONTAINER -->
+    <div id="chat-container" class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">💬 الغرف</div>
+                <input type="text" class="search-box" id="search-rooms" placeholder="ابحث عن غرفة...">
+            </div>
+            <div class="rooms-list" id="rooms-list"></div>
+            <div class="sidebar-footer">
+                <button class="btn-new-room" onclick="openCreateRoomModal()">+ غرفة جديدة</button>
+                <button class="btn-new-room" style="background: var(--secondary); margin-top: 10px;" onclick="showProfile()">👤 ملفي الشخصي</button>
+                <button class="btn-new-room" style="background: var(--danger); margin-top: 10px;" onclick="logout()">🚪 تسجيل الخروج</button>
+            </div>
+        </div>
+
+        <!-- MAIN CHAT -->
+        <div class="main-chat">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <h2 id="room-name">اختر غرفة</h2>
+                    <p id="room-members">0 عضو</p>
+                </div>
+                <div class="chat-header-actions">
+                    <button class="icon-btn" onclick="toggleSettings()">⚙️</button>
+                </div>
+            </div>
+
+            <div class="messages-container" id="messages-container">
+                <div class="empty-state">
+                    <div class="empty-state-icon">💬</div>
+                    <p>اختر غرفة لبدء الدردشة</p>
+                </div>
+            </div>
+
+            <div class="input-area" id="input-area" style="display: none;">
+                <div class="input-actions">
+                    <button class="action-btn" onclick="triggerFileInput()">📎</button>
+                    <button class="action-btn" onclick="toggleVoiceRecord()">🎤</button>
+                    <input type="file" id="file-input" style="display: none;" onchange="handleFileSelect(event)">
+                </div>
+                <textarea class="input-field" id="message-input" placeholder="اكتب رسالة..." rows="1"></textarea>
+                <button class="send-btn" onclick="sendMessage()">↑</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE CONTAINER -->
+    <div id="profile-container" class="container">
+        <div class="profile-header">
+            <h1 class="profile-title">👤 ملفي الشخصي</h1>
+            <div class="profile-actions">
+                <button class="btn" style="width: auto; padding: 10px 20px;" onclick="backToChat()">العودة</button>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-avatar-section">
+                <div class="profile-avatar" id="profile-avatar">👤</div>
+                <div class="profile-name" id="profile-name">—</div>
+                <div class="profile-role" id="profile-role">مستخدم عادي</div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-box">
+                    <div class="stat-number" id="stat-messages">0</div>
+                    <div class="stat-label">رسائل</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="stat-rooms">0</div>
+                    <div class="stat-label">غرف</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="stat-files">0</div>
+                    <div class="stat-label">ملفات</div>
+                </div>
+            </div>
+
+            <div class="profile-fields">
+                <div class="profile-field">
+                    <label>الاسم</label>
+                    <input type="text" id="profile-name-input" placeholder="اسمك">
+                </div>
+                <div class="profile-field">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="profile-phone-input" placeholder="رقم الهاتف" readonly>
+                </div>
+                <div class="profile-field">
+                    <label>النوع</label>
+                    <input type="text" id="profile-gender-input" placeholder="النوع" readonly>
+                </div>
+                <div class="profile-field">
+                    <label>العمر</label>
+                    <input type="number" id="profile-age-input" placeholder="العمر">
+                </div>
+                <div class="profile-field">
+                    <label>النبذة الشخصية</label>
+                    <textarea id="profile-bio-input" placeholder="اكتب نبذة عنك..." rows="4"></textarea>
+                </div>
+                <button class="btn" onclick="saveProfile()">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div class="modal-overlay" id="create-room-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <span>🏠 إنشاء غرفة جديدة</span>
+                <button class="modal-close" onclick="closeModal('create-room-modal')">✕</button>
+            </div>
+            <div class="form-group">
+                <label>اسم الغرفة</label>
+                <input type="text" id="room-name-input" placeholder="اسم الغرفة">
+            </div>
+            <div class="form-group">
+                <label>الوصف (اختياري)</label>
+                <input type="text" id="room-desc-input" placeholder="وصف الغرفة">
+            </div>
+            <button class="btn" onclick="createRoom()">إنشاء</button>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container"></div>
+
+    <script>
+        // ============ STATE ============
+        const state = {
+            currentUser: null,
+            users: [],
+            rooms: [],
+            messages: {},
+            activeRoomId: null,
+            recordingAudio: null
+        };
+
+        // ============ INITIALIZATION ============
+        function init() {
+            loadFromLocalStorage();
+            if (state.currentUser) {
+                showChat();
+            }
+        }
+
+        // ============ LOCAL STORAGE ============
+        function saveToLocalStorage() {
+            localStorage.setItem('chatAppState', JSON.stringify(state));
+        }
+
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('chatAppState');
+            if (saved) {
+                Object.assign(state, JSON.parse(saved));
+            }
+        }
+
+        // ============ AUTH ============
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function login() {
+            const phone = document.getElementById('login-phone').value.trim();
+            const password = document.getElementById('login-password').value;
+
+            if (!phone || !password) {
+                showToast('الرجاء ملء جميع الحقول', 'error');
+                return;
+            }
+
+            const user = state.users.find(u => u.phone === phone && u.password === password);
+            if (!user) {
+                showToast('بيانات غير صحيحة', 'error');
+                return;
+            }
+
+            state.currentUser = user;
+            saveToLocalStorage();
+            showToast(`مرحباً ${user.name}`, 'success');
+            showChat();
+        }
+
+        function signup() {
+            const name = document.getElementById('signup-name').value.trim();
+            const phone = document.getElementById('signup-phone').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const age = document.getElementById('signup-age').value;
+            const gender = document.getElementById('signup-gender').value;
+
+            if (!name || !phone || !password || !age || !gender) {
+                showToast('الرجاء ملء جميع الحقول', 'error');
+                return;
+            }
+
+            if (state.users.find(u => u.phone === phone)) {
+                showToast('هذا الرقم مسجل بالفعل', 'error');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now().toString(),
+                name,
+                phone,
+                password,
+                age,
+                gender,
+                avatar: '👤',
+                bio: '',
+                createdAt: new Date().toISOString(),
+                messageCount: 0,
+                roomCount: 0,
+                fileCount: 0
+            };
+
+            state.users.push(newUser);
+            state.currentUser = newUser;
+            saveToLocalStorage();
+            showToast('تم إنشاء الحساب بنجاح', 'success');
+            showChat();
+        }
+
+        function logout() {
+            if (confirm('هل تريد تسجيل الخروج؟')) {
+                state.currentUser = null;
+                saveToLocalStorage();
+                showLogin();
+                showToast('تم تسجيل الخروج', 'success');
+            }
+        }
+
+        // ============ NAVIGATION ============
+        function showLogin() {
+            document.getElementById('login-container').classList.add('active');
+            document.getElementById('chat-container').classList.remove('active');
+            document.getElementById('profile-container').classList.remove('active');
+        }
+
+        function showChat() {
+            document.getElementById('login-container').classList.remove('active');
+            document.getElementById('chat-container').classList.add('active');
+            document.getElementById('profile-container').classList.remove('active');
+            renderRooms();
+            openRoom('global');
+        }
+
+        function showProfile() {
+            document.getElementById('login-container').classList.remove('active');
+            document.getElementById('chat-container').classList.remove('active');
+            document.getElementById('profile-container').classList.add('active');
+            loadProfile();
+        }
+
+        function backToChat() {
+            showChat();
+        }
+
+        // ============ ROOMS ============
+        function renderRooms() {
+            const container = document.getElementById('rooms-list');
+            const globalRoom = { id: 'global', name: '🌐 الدردشة العامة', members: 0 };
+            const allRooms = [globalRoom, ...state.rooms];
+
+            container.innerHTML = allRooms.map(room => `
+                <div class="room-item ${room.id === state.activeRoomId ? 'active' : ''}" onclick="openRoom('${room.id}')">
+                    <div class="room-name">${room.name}</div>
+                    ${room.id !== 'global' ? `<div class="room-id">#${room.id}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function openRoom(roomId) {
+            state.activeRoomId = roomId;
+            if (!state.messages[roomId]) {
+                state.messages[roomId] = [];
+            }
+            saveToLocalStorage();
+            renderRooms();
+
+            const room = roomId === 'global' ? { name: '🌐 الدردشة العامة' } : state.rooms.find(r => r.id === roomId);
+            document.getElementById('room-name').textContent = room.name;
+            document.getElementById('room-members').textContent = `${room.members || 0} عضو`;
+            document.getElementById('input-area').style.display = 'flex';
+            renderMessages();
+        }
+
+        function openCreateRoomModal() {
+            document.getElementById('create-room-modal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function createRoom() {
+            const name = document.getElementById('room-name-input').value.trim();
+            const desc = document.getElementById('room-desc-input').value.trim();
+
+            if (!name) {
+                showToast('الرجاء إدخال اسم الغرفة', 'error');
+                return;
+            }
+
+            const roomId = Math.random().toString(36).substr(2, 8).toUpperCase();
+            const newRoom = {
+                id: roomId,
+                name: name,
+                desc: desc,
+                members: 1,
+                createdBy: state.currentUser.id,
+                createdAt: new Date().toISOString()
+            };
+
+            state.rooms.push(newRoom);
+            state.messages[roomId] = [];
+            saveToLocalStorage();
+            renderRooms();
+            closeModal('create-room-modal');
+            openRoom(roomId);
+            showToast('تم إنشاء الغرفة بنجاح', 'success');
+
+            // Clear inputs
+            document.getElementById('room-name-input').value = '';
+            document.getElementById('room-desc-input').value = '';
+        }
+
+        // ============ MESSAGES ============
+        function renderMessages() {
+            const container = document.getElementById('messages-container');
+            const messages = state.messages[state.activeRoomId] || [];
+
+            if (messages.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💬</div>
+                        <p>لا توجد رسائل بعد. كن أول من يكتب!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = messages.map(msg => {
+                const isOwn = msg.senderId === state.currentUser.id;
+                const sender = state.users.find(u => u.id === msg.senderId) || { name: msg.senderName, avatar: '👤' };
+                const time = new Date(msg.createdAt).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+
+                let content = '';
+                if (msg.type === 'text') {
+                    content = `<div>${escapeHtml(msg.text)}</div>`;
+                } else if (msg.type === 'image') {
+                    content = `<img src="${msg.src}" class="message-image" onclick="window.open('${msg.src}', '_blank')">`;
+                } else if (msg.type === 'file') {
+                    content = `
+                        <div class="message-file" onclick="downloadFile('${msg.id}')">
+                            <div class="file-icon">📄</div>
+                            <div class="file-info">
+                                <div class="file-name">${msg.fileName}</div>
+                                <div class="file-size">${msg.fileSize}</div>
+                            </div>
+                        </div>
+                    `;
+                } else if (msg.type === 'audio') {
+                    content = `
+                        <div class="audio-player">
+                            <button class="audio-btn" onclick="playAudio('${msg.id}')">▶</button>
+                            <div class="audio-wave">
+                                <div class="audio-bar"></div>
+                                <div class="audio-bar"></div>
+                                <div class="audio-bar"></div>
+                            </div>
+                            <span style="font-size: 12px;">${msg.duration || '0'}ث</span>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="message ${isOwn ? 'own' : ''}">
+                        <div class="message-avatar">${sender.avatar}</div>
+                        <div class="message-content">
+                            <div class="message-header">${sender.name}</div>
+                            <div class="message-bubble">${content}</div>
+                            <div class="message-time">${time}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const text = input.value.trim();
+
+            if (!text) {
+                showToast('اكتب رسالة أولاً', 'error');
+                return;
+            }
+
+            const message = {
+                id: Date.now().toString(),
+                senderId: state.currentUser.id,
+                senderName: state.currentUser.name,
+                type: 'text',
+                text: text,
+                createdAt: new Date().toISOString()
+            };
+
+            state.messages[state.activeRoomId].push(message);
+            state.currentUser.messageCount = (state.currentUser.messageCount || 0) + 1;
+            saveToLocalStorage();
+            renderMessages();
+            input.value = '';
+            input.style.height = 'auto';
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const isImage = file.type.startsWith('image/');
+                const message = {
+                    id: Date.now().toString(),
+                    senderId: state.currentUser.id,
+                    senderName: state.currentUser.name,
+                    type: isImage ? 'image' : 'file',
+                    src: e.target.result,
+                    fileName: file.name,
+                    fileSize: formatFileSize(file.size),
+                    createdAt: new Date().toISOString()
+                };
+
+                state.messages[state.activeRoomId].push(message);
+                state.currentUser.fileCount = (state.currentUser.fileCount || 0) + 1;
+                saveToLocalStorage();
+                renderMessages();
+                showToast('تم إرسال الملف بنجاح', 'success');
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        function triggerFileInput() {
+            document.getElementById('file-input').click();
+        }
+
+        function downloadFile(messageId) {
+            const msg = state.messages[state.activeRoomId].find(m => m.id === messageId);
+            if (msg && msg.src) {
+                const link = document.createElement('a');
+                link.href = msg.src;
+                link.download = msg.fileName || 'file';
+                link.click();
+            }
+        }
+
+        function toggleVoiceRecord() {
+            if (state.recordingAudio) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        }
+
+        function startRecording() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    const mediaRecorder = new MediaRecorder(stream);
+                    const audioChunks = [];
+
+                    mediaRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const message = {
+                                id: Date.now().toString(),
+                                senderId: state.currentUser.id,
+                                senderName: state.currentUser.name,
+                                type: 'audio',
+                                src: e.target.result,
+                                duration: '0',
+                                createdAt: new Date().toISOString()
+                            };
+                            state.messages[state.activeRoomId].push(message);
+                            saveToLocalStorage();
+                            renderMessages();
+                            showToast('تم إرسال الرسالة الصوتية', 'success');
+                        };
+                        reader.readAsDataURL(audioBlob);
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    mediaRecorder.start();
+                    state.recordingAudio = mediaRecorder;
+                    showToast('جاري التسجيل...', 'warning');
+                })
+                .catch(err => {
+                    showToast('لم يتم الوصول للميكروفون', 'error');
+                });
+        }
+
+        function stopRecording() {
+            if (state.recordingAudio) {
+                state.recordingAudio.stop();
+                state.recordingAudio = null;
+            }
+        }
+
+        function playAudio(messageId) {
+            const msg = state.messages[state.activeRoomId].find(m => m.id === messageId);
+            if (msg && msg.src) {
+                const audio = new Audio(msg.src);
+                audio.play();
+            }
+        }
+
+        // ============ PROFILE ============
+        function loadProfile() {
+            const user = state.currentUser;
+            document.getElementById('profile-avatar').textContent = user.avatar || '👤';
+            document.getElementById('profile-name').textContent = user.name;
+            document.getElementById('profile-role').textContent = 'مستخدم عادي';
+            document.getElementById('profile-name-input').value = user.name;
+            document.getElementById('profile-phone-input').value = user.phone;
+            document.getElementById('profile-gender-input').value = user.gender === 'male' ? 'ذكر' : 'أنثى';
+            document.getElementById('profile-age-input').value = user.age;
+            document.getElementById('profile-bio-input').value = user.bio || '';
+
+            document.getElementById('stat-messages').textContent = user.messageCount || 0;
+            document.getElementById('stat-rooms').textContent = state.rooms.filter(r => r.createdBy === user.id).length;
+            document.getElementById('stat-files').textContent = user.fileCount || 0;
+        }
+
+        function saveProfile() {
+            const user = state.currentUser;
+            user.name = document.getElementById('profile-name-input').value.trim();
+            user.age = document.getElementById('profile-age-input').value;
+            user.bio = document.getElementById('profile-bio-input').value.trim();
+
+            saveToLocalStorage();
+            showToast('تم حفظ التغييرات', 'success');
+            loadProfile();
+        }
+
+        // ============ UTILITIES ============
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        function toggleSettings() {
+            showToast('الإعدادات قريباً', 'info');
+        }
+
+        // ============ INITIALIZATION ============
+        init();
+    </script>
+</body>
+</html>
